@@ -1,18 +1,32 @@
 # Mobility Lakehouse Portfolio
 
-Proyecto de ingenieria de datos end-to-end, disenado para portfolio y para correr sin gastar un dolar.
+![Dashboard preview](docs/dashboard-preview.jpg)
 
-Construye un mini lakehouse local con datos de viajes urbanos:
+A zero-cost data engineering portfolio project that builds a local analytics lakehouse for urban mobility data using Python, DuckDB, SQL and Streamlit.
 
-- Ingesta reproducible hacia una capa `bronze`.
-- Transformaciones SQL hacia tablas `silver` y `gold`.
-- Warehouse local en DuckDB.
-- Tests de calidad de datos con `pytest`.
-- Dashboard local con Streamlit.
-- CI gratis con GitHub Actions.
-- Documentacion clara para reclutadores y equipos tecnicos.
+The project turns reproducible trip data into analytics-ready metrics through bronze, silver and gold layers, then exposes the results in a local dashboard.
 
-## Arquitectura
+## What This Project Demonstrates
+
+- End-to-end data pipeline design
+- Bronze, silver and gold data modeling
+- SQL-based analytical transformations
+- Local warehouse development with DuckDB
+- Data quality testing with pytest
+- CI automation with GitHub Actions
+- Lightweight dashboarding with Streamlit
+
+## Features
+
+- Reproducible ingestion into a `bronze` layer.
+- SQL transformations into `silver` and `gold` tables.
+- Local analytical warehouse with DuckDB.
+- Data quality tests with `pytest`.
+- Local dashboard with Streamlit.
+- Free CI with GitHub Actions.
+- Documentation for technical reviewers and recruiters.
+
+## Architecture
 
 ```text
 Synthetic/public data
@@ -29,7 +43,7 @@ DuckDB warehouse
         +--> Streamlit dashboard
 ```
 
-El proyecto funciona offline generando datos sinteticos. Eso evita costos, credenciales y dependencia de APIs pagas. Mas adelante se puede extender a fuentes publicas como NYC TLC Trip Record Data, OpenStreetMap o datasets abiertos de ciudades.
+The project works offline by generating synthetic data. This avoids costs, credentials and paid API dependencies. It can later be extended with public datasets such as NYC TLC Trip Record Data, OpenStreetMap or city open data portals.
 
 ## Stack
 
@@ -41,7 +55,7 @@ El proyecto funciona offline generando datos sinteticos. Eso evita costos, crede
 - Ruff
 - GitHub Actions
 
-Todo corre local. No usa AWS, GCP, Azure, Snowflake, Databricks ni servicios pagos.
+Everything runs locally. The project does not require AWS, GCP, Azure, Snowflake, Databricks or any paid service.
 
 ## Quickstart
 
@@ -54,43 +68,49 @@ make test
 make dashboard
 ```
 
-El pipeline crea:
+The pipeline creates:
 
 - `data/bronze/trips.csv`
 - `data/warehouse.duckdb`
-- tablas analiticas dentro de DuckDB
+- analytical tables inside DuckDB
 
-Para inspeccionar resultados:
+To inspect results from the terminal:
 
 ```bash
 python -m mobility_lakehouse.query
 ```
 
-Para abrir el dashboard:
+To open the dashboard:
 
 ```bash
 make dashboard
 ```
 
-## Comandos
+Then visit:
 
-```bash
-make generate     # genera datos de ejemplo
-make transform    # construye tablas silver/gold en DuckDB
-make pipeline     # generate + transform
-make dashboard    # abre un dashboard local
-make test         # ejecuta tests
-make lint         # ejecuta ruff
-make clean        # borra artefactos generados
+```text
+http://localhost:8501
 ```
 
-## Modelo de datos
+## Commands
+
+```bash
+make generate     # generate sample data
+make transform    # build silver/gold tables in DuckDB
+make pipeline     # generate + transform
+make dashboard    # open the local dashboard
+make test         # run tests
+make lint         # run ruff
+make clean        # remove generated artifacts
+```
+
+## Data Model
 
 ### `silver_trips`
 
-Tabla limpia a nivel viaje.
+Clean trip-level table.
 
-Campos principales:
+Main fields:
 
 - `trip_id`
 - `pickup_ts`
@@ -106,52 +126,52 @@ Campos principales:
 
 ### `gold_daily_metrics`
 
-Metricas agregadas por dia:
+Daily aggregated metrics:
 
-- cantidad de viajes
-- ingresos totales
-- distancia promedio
-- tarifa promedio
-- porcentaje promedio de propina
+- trip count
+- total revenue
+- average distance
+- average fare
+- average tip rate
 
 ### `gold_zone_metrics`
 
-Metricas por zona de origen:
+Pickup-zone aggregated metrics:
 
-- viajes
-- ingresos
-- distancia promedio
-- duracion promedio
+- trip count
+- total revenue
+- average distance
+- average duration
 
-## Calidad de datos
+## Data Quality
 
-Los tests validan:
+The tests validate that:
 
-- que el pipeline cree las tablas esperadas
-- que no existan IDs duplicados
-- que los montos no sean negativos
-- que las duraciones sean positivas
-- que las tablas gold tengan datos
+- the pipeline creates the expected tables
+- trip IDs are unique
+- monetary amounts are not negative
+- trip durations are positive
+- gold tables contain data
 
-## Como mostrarlo en portfolio
+## Portfolio Story
 
-Este proyecto demuestra:
+This project demonstrates:
 
-- modelado por capas tipo lakehouse
-- SQL analitico
-- automatizacion reproducible
-- testing de datos
-- CI/CD basico
-- visualizacion de metricas en dashboard
-- documentacion de arquitectura
+- lakehouse-style layered modeling
+- analytical SQL
+- reproducible automation
+- data testing
+- basic CI/CD
+- dashboard-based metric exploration
+- architecture documentation
 
-Una buena descripcion para LinkedIn/GitHub:
+Suggested short description:
 
 > Built a zero-cost local data engineering lakehouse using Python, DuckDB, SQL, Streamlit, pytest and GitHub Actions. The pipeline ingests trip data, creates bronze/silver/gold layers, validates data quality and exposes analytics-ready metrics in a local dashboard.
 
-## Roadmap gratis
+## Free Roadmap
 
-- Agregar ingestion opcional desde datasets publicos.
-- Agregar lineage simple con diagramas.
-- Publicar capturas de queries y metricas en `/docs`.
-- Agregar particionado por fecha para simular un data lake real.
+- Add optional ingestion from public datasets.
+- Add simple lineage diagrams.
+- Publish query and metric screenshots under `/docs`.
+- Add date partitioning to simulate a real data lake.
