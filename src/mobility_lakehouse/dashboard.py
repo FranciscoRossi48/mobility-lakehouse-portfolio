@@ -63,13 +63,13 @@ st.dataframe(
             "average_duration_minutes",
         ]
     ],
-    use_container_width=True,
+    width="stretch",
     hide_index=True,
 )
 
 st.subheader("Recent curated trips")
 st.dataframe(
     silver_trips.sort_values("pickup_ts", ascending=False).head(25),
-    use_container_width=True,
+    width="stretch",
     hide_index=True,
 )
